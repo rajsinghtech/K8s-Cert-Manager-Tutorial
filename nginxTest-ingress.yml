@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginxTest-ingress
+  namespace: nginxTest
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+    - host: "nginxTest.rajsingh.info"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginxTest-svc
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - nginxTest.rajsingh.info
+      secretName: nginxTest-tls-secret
